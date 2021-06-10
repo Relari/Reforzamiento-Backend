@@ -27,30 +27,26 @@ class StudentApiMapperTest {
 
     Student student = studentApiMapper.mapStudent(request);
 
-    Student studentExpected = student();
-
-    Assertions.assertEquals(studentExpected.getFirstName(), student.getFirstName());
-    Assertions.assertEquals(studentExpected.getGender(), student.getGender());
-    Assertions.assertEquals(studentExpected.getLastName(), student.getLastName());
-    Assertions.assertEquals(studentExpected.getMiddleName(), student.getMiddleName());
-    Assertions.assertEquals(studentExpected.getOtherStudentDetail(), student.getOtherStudentDetail());
-    Assertions.assertEquals(studentExpected.getDateOfBirth(), student.getDateOfBirth());
+    Assertions.assertEquals(request.getFirstName(), student.getFirstName());
+    Assertions.assertEquals(request.getGender(), student.getGender());
+    Assertions.assertEquals(request.getLastName(), student.getLastName());
+    Assertions.assertEquals(request.getMiddleName(), student.getMiddleName());
+    Assertions.assertEquals(request.getOtherStudentDetail(), student.getOtherStudentDetail());
+    Assertions.assertEquals(request.getDateOfBirth(), student.getDateOfBirth());
   }
 
   @Test
   void whenMapperStudentThenReturnEntity() {
     Student student = student();
 
-    StudentResponse response = studentApiMapper.mapStudentResponse(student);
+    StudentResponse studentResponse = studentApiMapper.mapStudentResponse(student);
 
-    StudentResponse studentExpected = studentResponse();
-
-    Assertions.assertEquals(studentExpected.getFirstName(), response.getFirstName());
-    Assertions.assertEquals(studentExpected.getGender(), response.getGender());
-    Assertions.assertEquals(studentExpected.getLastName(), response.getLastName());
-    Assertions.assertEquals(studentExpected.getMiddleName(), response.getMiddleName());
-    Assertions.assertEquals(studentExpected.getOtherStudentDetail(), response.getOtherStudentDetail());
-    Assertions.assertEquals(studentExpected.getDateOfBirth(), response.getDateOfBirth());
+    Assertions.assertEquals(student.getFirstName(), studentResponse.getFirstName());
+    Assertions.assertEquals(student.getGender(), studentResponse.getGender());
+    Assertions.assertEquals(student.getLastName(), studentResponse.getLastName());
+    Assertions.assertEquals(student.getMiddleName(), studentResponse.getMiddleName());
+    Assertions.assertEquals(student.getOtherStudentDetail(), studentResponse.getOtherStudentDetail());
+    Assertions.assertEquals(student.getDateOfBirth(), studentResponse.getDateOfBirth());
   }
 
   private Student student() {

@@ -2,7 +2,8 @@ package com.example.demo.student.dao.impl;
 
 import com.example.demo.student.model.business.Student;
 import com.example.demo.student.model.entity.StudentEntity;
-import org.springframework.stereotype.Component;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 /**
  * <b>Class:</b> StudentMapper.<br/>
@@ -11,10 +12,10 @@ import org.springframework.stereotype.Component;
  * @version 1.0.0
  */
 
-@Component
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 class StudentMapper {
 
-  public Student mapStudent(StudentEntity entity) {
+  public static Student mapStudent(StudentEntity entity) {
     return Student.builder()
         .dateOfBirth(entity.getDateOfBirth())
         .firstName(entity.getFirstName())
@@ -25,7 +26,7 @@ class StudentMapper {
         .build();
   }
 
-  public StudentEntity mapStudentEntity(Student student) {
+  public static StudentEntity mapStudentEntity(Student student) {
     return StudentEntity.builder()
         .dateOfBirth(student.getDateOfBirth())
         .firstName(student.getFirstName())

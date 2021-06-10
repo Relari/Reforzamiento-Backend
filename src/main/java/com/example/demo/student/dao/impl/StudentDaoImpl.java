@@ -24,14 +24,12 @@ class StudentDaoImpl implements StudentDao {
 
   private final StudentRepository repository;
 
-  private final StudentMapper mapper;
-
   @Override
   public Observable<Student> findAll() {
     return Observable.fromCallable(repository::findAll)
             .subscribeOn(Schedulers.io())
             .flatMapIterable(studentEntities -> studentEntities)
-            .map(mapper::mapStudent)
+            .map(StudentMapper::mapStudent)
             .doOnSubscribe(disposable -> log.debug("Listing the students with their data."))
             .doOnNext(student -> log.trace(student.toString()))
             .doOnComplete(() -> log.info("The list of students has been completed."));
@@ -50,7 +48,7 @@ class StudentDaoImpl implements StudentDao {
 
   @Override
   public Completable save(Student student) {
-    return Single.fromCallable(() -> mapper.mapStudentEntity(student))
+    return Single.fromCallable(() -> StudentMapper.mapStudentEntity(student))
             .map(repository::save)
             .subscribeOn(Schedulers.io())
             .doOnSubscribe(disposable -> log.debug("Registering the student."))
