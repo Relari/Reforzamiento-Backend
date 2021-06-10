@@ -1,9 +1,9 @@
 package com.example.demo.controller;
 
-import com.example.demo.business.model.api.request.StudentRequest;
-import com.example.demo.business.model.api.response.StudentDetailResponse;
-import com.example.demo.business.model.api.response.StudentResponse;
-import com.example.demo.business.model.business.Student;
+import com.example.demo.student.model.api.request.StudentRequest;
+import com.example.demo.student.model.api.response.StudentDetailResponse;
+import com.example.demo.student.model.api.response.StudentResponse;
+import com.example.demo.student.model.business.Student;
 import java.util.List;
 import org.springframework.stereotype.Component;
 

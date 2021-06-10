@@ -1,8 +1,7 @@
-package com.example.demo.controller;
+package com.example.demo.student.dao.impl;
 
-import com.example.demo.student.model.api.request.StudentRequest;
-import com.example.demo.student.model.api.response.StudentResponse;
 import com.example.demo.student.model.business.Student;
+import com.example.demo.student.model.entity.StudentEntity;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,20 +11,21 @@ import org.junit.jupiter.api.Test;
  * @author RLR
  * @version 1.0.0
  */
-class StudentApiMapperTest {
 
-  private StudentApiMapper studentApiMapper;
+class StudentMapperTest {
+
+  private StudentMapper studentMapper;
 
   @BeforeEach
   void init() {
-    studentApiMapper = new StudentApiMapper();
+    studentMapper = new StudentMapper();
   }
 
   @Test
   void whenMapperEntityThenReturnStudent() {
-    StudentRequest request = studentRequest();
+    StudentEntity studentEntity = studentEntity();
 
-    Student student = studentApiMapper.mapStudent(request);
+    Student student = studentMapper.mapStudent(studentEntity);
 
     Student studentExpected = student();
 
@@ -41,16 +41,16 @@ class StudentApiMapperTest {
   void whenMapperStudentThenReturnEntity() {
     Student student = student();
 
-    StudentResponse response = studentApiMapper.mapStudentResponse(student);
+    StudentEntity entity = studentMapper.mapStudentEntity(student);
 
-    StudentResponse studentExpected = studentResponse();
+    StudentEntity studentExpected = studentEntity();
 
-    Assertions.assertEquals(studentExpected.getFirstName(), response.getFirstName());
-    Assertions.assertEquals(studentExpected.getGender(), response.getGender());
-    Assertions.assertEquals(studentExpected.getLastName(), response.getLastName());
-    Assertions.assertEquals(studentExpected.getMiddleName(), response.getMiddleName());
-    Assertions.assertEquals(studentExpected.getOtherStudentDetail(), response.getOtherStudentDetail());
-    Assertions.assertEquals(studentExpected.getDateOfBirth(), response.getDateOfBirth());
+    Assertions.assertEquals(studentExpected.getFirstName(), entity.getFirstName());
+    Assertions.assertEquals(studentExpected.getGender(), entity.getGender());
+    Assertions.assertEquals(studentExpected.getLastName(), entity.getLastName());
+    Assertions.assertEquals(studentExpected.getMiddleName(), entity.getMiddleName());
+    Assertions.assertEquals(studentExpected.getOtherStudentDetail(), entity.getOtherStudentDetail());
+    Assertions.assertEquals(studentExpected.getDateOfBirth(), entity.getDateOfBirth());
   }
 
   private Student student() {
@@ -64,8 +64,8 @@ class StudentApiMapperTest {
             .build();
   }
 
-  private StudentRequest studentRequest() {
-    return StudentRequest.builder()
+  private StudentEntity studentEntity() {
+    return StudentEntity.builder()
             .firstName("Jose")
             .lastName("Gonzales")
             .middleName("Luis")
@@ -75,14 +75,4 @@ class StudentApiMapperTest {
             .build();
   }
 
-  private StudentResponse studentResponse() {
-    return StudentResponse.builder()
-            .firstName("Jose")
-            .lastName("Gonzales")
-            .middleName("Luis")
-            .gender("M")
-            .otherStudentDetail("Backend")
-            .dateOfBirth("01/01/2020")
-            .build();
-  }
 }
