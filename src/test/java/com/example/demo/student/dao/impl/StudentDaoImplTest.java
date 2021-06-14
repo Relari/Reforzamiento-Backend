@@ -25,9 +25,6 @@ class StudentDaoImplTest {
   @Mock
   private StudentRepository repository;
 
-  @Mock
-  private StudentMapper mapper;
-
   @InjectMocks
   private StudentDaoImpl dao;
 
@@ -37,9 +34,6 @@ class StudentDaoImplTest {
     Mockito.when(repository.findAll())
             .thenReturn(Collections.singletonList(studentEntity()));
 
-    Mockito.when(mapper.mapStudent(Mockito.any()))
-            .thenReturn(student());
-
     TestObserver<Student> testObserver = dao.findAll().test();
     testObserver.awaitTerminalEvent();
     testObserver.assertComplete().assertNoErrors();
@@ -48,14 +42,12 @@ class StudentDaoImplTest {
   @Test
   void whenSaveStudentThenReturnSuccessful() {
 
-    Mockito.when(mapper.mapStudentEntity(Mockito.any()))
-            .thenReturn(studentEntity());
-
     Mockito.when(repository.save(Mockito.any()))
-            .thenReturn(Completable.complete());
+            .thenReturn(new StudentEntity());
 
     TestObserver<Void> testObserver = dao.save(student()).test();
     testObserver.awaitTerminalEvent();
+    testObserver.assertComplete().assertNoErrors();
   }
 
   private Student student() {

@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.student.model.api.request.StudentRequest;
+import com.example.demo.student.model.api.response.StudentDetailResponse;
 import com.example.demo.student.model.api.response.StudentResponse;
 import com.example.demo.student.model.business.Student;
 import com.example.demo.student.service.StudentService;
@@ -13,6 +14,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.Collections;
 
 /**
  * <b>Class:</b> StudentServiceImplTest<br/>
@@ -38,9 +41,27 @@ class StudentControllerTest {
         .thenReturn(Observable.just(student()));
 
     Mockito.when(mapper.mapStudentResponse(Mockito.any()))
-        .thenReturn(response());
+        .thenReturn(studentResponse());
 
     TestObserver<StudentResponse> testObserver = controller.findAll().test();
+    testObserver.awaitTerminalEvent();
+    testObserver.assertComplete().assertNoErrors();
+
+  }
+
+  @Test
+  void whenFindAllThenReturnStudentDetailResponse() {
+
+    Mockito.when(service.findAll())
+            .thenReturn(Observable.just(student()));
+
+    Mockito.when(mapper.mapStudentResponse(Mockito.any()))
+            .thenReturn(studentResponse());
+
+    Mockito.when(mapper.mapStudentDetailResponse(Mockito.anyList()))
+            .thenReturn(studentDetailResponse());
+
+    TestObserver<StudentDetailResponse> testObserver = controller.find().test();
     testObserver.awaitTerminalEvent();
     testObserver.assertComplete().assertNoErrors();
 
@@ -82,7 +103,7 @@ class StudentControllerTest {
         .build();
   }
 
-  private StudentResponse response() {
+  private StudentResponse studentResponse() {
     return StudentResponse.builder()
         .firstName("Jose")
         .lastName("Gonzales")
@@ -91,6 +112,10 @@ class StudentControllerTest {
         .dateOfBirth("01/01/2020")
         .otherStudentDetail("Backend")
         .build();
+  }
+
+  private StudentDetailResponse studentDetailResponse() {
+    return new StudentDetailResponse("Student", Collections.singletonList(studentResponse()));
   }
 
 }

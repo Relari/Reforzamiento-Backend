@@ -1,11 +1,16 @@
 package com.example.demo.controller;
 
 import com.example.demo.student.model.api.request.StudentRequest;
+import com.example.demo.student.model.api.response.StudentDetailResponse;
 import com.example.demo.student.model.api.response.StudentResponse;
 import com.example.demo.student.model.business.Student;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * <b>Class:</b> StudentMapperTest<br/>
@@ -47,6 +52,16 @@ class StudentApiMapperTest {
     Assertions.assertEquals(student.getMiddleName(), studentResponse.getMiddleName());
     Assertions.assertEquals(student.getOtherStudentDetail(), studentResponse.getOtherStudentDetail());
     Assertions.assertEquals(student.getDateOfBirth(), studentResponse.getDateOfBirth());
+  }
+
+  @Test
+  void whenMapperStudentResponseThenReturnStudentDetailResponse() {
+    List<StudentResponse> studentResponses = Collections.singletonList(studentResponse());
+
+    StudentDetailResponse studentDetailResponse = studentApiMapper.mapStudentDetailResponse(studentResponses);
+
+    Assertions.assertEquals(studentResponses.size(), studentDetailResponse.getStudents().size());
+    Assertions.assertEquals("Student", studentDetailResponse.getData());
   }
 
   private Student student() {
